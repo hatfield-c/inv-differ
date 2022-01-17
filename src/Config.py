@@ -1,0 +1,15 @@
+LIGHT_GRAY = "#CAD5E2"
+MED_GRAY = "#cccccc"
+DARK_GRAY = "#242B2E"
+BLACK = "#0D0D0D"
+RED = "#FF0000"
+
+DISABLED_GRAY = "#d4d4d4"
+
+APP_WIDTH = 740
+APP_HEIGHT = 590
+
+NEWLINE = ''
+DELIMITER = ','
+
+OUT_PATH = 'data/reorder'

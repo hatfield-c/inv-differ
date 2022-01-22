@@ -110,24 +110,24 @@ def reorder_check(inv_path, req_path):
     if req is None:
         return None
      
-    reorder = []
+    reorders = []
     
     for name in req:
         if name not in inv:
             inv[name] = 0
             
         inv_qty = inv[name]
-        req_qty = req[name]
+        req_data = req[name]
         
-        if inv_qty < req_qty:
+        if inv_qty < req_data["reorder"]:
             orig_name = orig_names[name]
-            diff = req_qty - inv_qty
+            restock = req_data["restock"]
             
-            entry = [ orig_name, str(diff) ]
+            entry = [ orig_name, str(restock) ]
             
-            reorder.append(entry)
+            reorders.append(entry)
     
-    return reorder
+    return reorders
 
 def get_inv(inv_path):
     inv = {}
@@ -177,7 +177,8 @@ def get_req(req_path):
                 continue
             
             name = row[0]
-            qty = row[1]
+            restock = row[1]
+            reorder = row[2]
             
             orig_name = name
             name = name.replace(" ", "")
@@ -186,11 +187,18 @@ def get_req(req_path):
                 duplicate_error(orig_name, req_path)
                 return None, None
                 
-            if not qty.isdigit():
-                qty_error(orig_name, qty, req_path)
+            if not restock.isdigit():
+                qty_error(orig_name, restock, req_path)
                 return None, None
-                
-            req[name] = int(qty)
+            
+            if not reorder.isdigit():
+                qty_error(orig_name, reorder, req_path)
+                return None, None
+            
+            req[name] = {
+                "restock": int(restock),
+                "reorder": int(reorder)
+            }
             orig_names[name] = orig_name
                     
     return req, orig_names

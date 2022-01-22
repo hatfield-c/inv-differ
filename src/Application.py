@@ -121,7 +121,7 @@ def reorder_check(inv_path, req_path):
         
         if inv_qty < req_data["reorder"]:
             orig_name = orig_names[name]
-            restock = req_data["restock"]
+            restock = req_data["restock"] - inv_qty
             
             entry = [ orig_name, str(restock) ]
             

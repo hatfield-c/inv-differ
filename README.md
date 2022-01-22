@@ -33,9 +33,9 @@ The algorithm that is followed can be described as so:
   - If a name is present in req.csv but not in inv.csv, then an entry is created in the inventory list for that name and its current quantity is set to 0. Proceed to step 6
   - If a name is present in both req.csv and inv.csv, then proceed to step 6 without issue
   - If a name is present in inv.csv but not in req.csv, then it is ignored. Proceed to step 6
-6. Compare the required quantity of every name extracted from req.csv against the current quantity in the inventory list that was extracted from inv.csv (or for missing products, the quantity of 0 created in step 5)
-  - If the current quantity is less than the required quantity, then add the name of the product to the reorder.csv file, as well as the quantity needed. The quantity needed is defined as the required quantity minus the current quantity
-  - If the current quantity is greater than or equal to the required quantity, then this product name is ignored
+6. Compare the reorder quantity of every name extracted from req.csv against the current quantity in the inventory list that was extracted from inv.csv (or for missing products, the quantity of 0 created in step 5)
+  - If the current quantity is less than the restock quantity, then add the name of the product to the reorder.csv file, as well as the restock quantity.
+  - If the current quantity is greater than or equal to the restock quantity, then this product name is ignored
 7. The names and required quantities of each product that needs to be re-ordered will be saved in the file 'reorder.csv'
 
 # File Structures
@@ -67,9 +67,10 @@ This file only reads information from the first and the second column. All other
 
 The columns contain the following information:
 - 1 : The first column contains the name of the product
-- 2 : The second column contains the required minimum quantity of the product
+- 2 : The second columnd contains the restock quantity of the product
+- 3 : The third column contains the reorder point of the product
 
-The second column, which is supposed to contain the minimum required quantity, must be a positive integer. If anything else is given, the program stops, and an error message is displayed.
+The second and third columns, which are supposed to contain product quantities, must both be positive integers. If anything else is given, the program stops, and an error message is displayed.
 
 # Recompiling
 
@@ -81,6 +82,6 @@ The source code is located in the 'src' folder, which has the following four fil
 
 To compile into a .exe file for distribution onto Windows computers, you must have a local instance of Python installed (version 3.7 or higher).
 
-I used py2exe, but you can use whatever you like. py2exe can be found here:
+Once you have Python installed, you must use a python compiler library. I used py2exe, but you can use whatever you like. py2exe can be found here:
 - https://www.py2exe.org
 
